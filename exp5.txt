@@ -1,0 +1,33 @@
+UPDATE Student
+SET name='John'
+WHERE ID = 44553;
+
+commit;
+
+
+UPDATE Student
+SET name='Peltier'
+WHERE ID = 44553;
+
+ROLLBACK
+
+INSERT INTO Student
+VALUES(11111,'Nithin','Biology',150,'2001-06-08');
+
+UPDATE Student SET name='Nithin Jose' WHERE ID=11111;
+
+SAVEPOINT nitin_name;
+
+UPDATE Student SET tot_cred=160 WHERE ID=11111;
+
+SAVEPOINT nitin_cred;
+
+UPDATE Student SET dept_name='Comp.Sci' WHERE ID=11111;
+
+SAVEPOINT nithin_dept;
+
+ROLLBACK TO SAVEPOINT nithin_dept;
+
+ROLLBACK TO SAVEPOINT nitin_cred;
+
+ROLLBACK TO SAVEPOINT nitin_name;

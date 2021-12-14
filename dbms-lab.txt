@@ -1,0 +1,434 @@
+CREATE TABLE Classroom(
+
+    building VARCHAR(50),
+
+    room_number INT,
+
+    capacity INT,
+
+    PRIMARY KEY (room_number)
+
+    );
+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| building    | varchar(50) | YES  |     | NULL    |       |
+| room_number | int         | NO   | PRI | NULL    |       |
+| capacity    | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+
+ CREATE TABLE Department(
+
+   dept_name VARCHAR(20),
+
+   building VARCHAR (50),
+
+   budget INT,
+
+   PRIMARY KEY (dept_name)
+
+   );
+
+
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dept_name | varchar(20) | NO   | PRI | NULL    |       |
+| building  | varchar(50) | YES  |     | NULL    |       |
+| budget    | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+CREATE TABLE Course (
+
+   course_id varchar(10),
+   title VARCHAR (20),
+   dept_name VARCHAR(20),
+   credits INT,
+   PRIMARY KEY (course_id),
+   FOREIGN KEY (dept_name) REFERENCES Department(dept_name)
+
+  );
+
+ +-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| course_id | varchar(10) | NO   | PRI | NULL    |       |
+| title     | varchar(20) | YES  |     | NULL    |       |
+| dept_name | varchar(20) | YES  | MUL | NULL    |       |
+| credits   | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+
+
+CREATE TABLE Instructor(
+
+     ID int,
+
+     name VARCHAR(20),
+
+     dept_name VARCHAR(20),
+
+     salary int,
+
+     PRIMARY KEY (ID),
+
+     FOREIGN KEY (dept_name) REFERENCES Department(dept_name)
+
+   );
+
+
+
+
+  CREATE TABLE Student(
+
+     ID int,
+
+     name VARCHAR(20),
+
+     dept_name VARCHAR(20),
+
+     tot_cred INT,
+
+     PRIMARY KEY(ID),
+
+     FOREIGN KEY (dept_name) REFERENCES Department(dept_name)
+
+    );
+
+
+
+
+CREATE TABLE Section(
+
+     course_id varchar(10),
+
+     sec_id INT,
+
+     semester varchar(10),
+
+     year INT,
+    
+     building varchar(50),
+    
+     room_number int,
+
+     PRIMARY KEY(sec_id),
+
+     FOREIGN KEY (course_id) REFERENCES Course(course_id)
+
+     );
+
+
+
+CREATE TABLE Teaches(
+
+    ID INT,
+
+    course_id varchar(10),
+
+    sec_id INT,
+
+    semester varchar(10),
+
+    year INT,
+
+    PRIMARY KEY (ID),
+
+    FOREIGN KEY (course_id)REFERENCES Course(course_id),
+
+    FOREIGN KEY (sec_id) REFERENCES Section(sec_id)
+
+   );
+
+
+
+
+
+CREATE TABLE Takes(
+
+    ID INT,
+
+    course_id varchar(10),
+
+    sec_id INT,
+
+    semester varchar(10),
+
+    year INT,
+
+    grade char(5),
+
+    PRIMARY KEY (ID),
+
+    FOREIGN KEY (course_id)REFERENCES Course(course_id),
+
+    FOREIGN KEY (sec_id) REFERENCES Section(sec_id)
+
+   );
+
+
+
+
+ALTER TABLE Course
+Modify course_id varchar(10);
+
+ALTER TABLE Department
+ADD dept_no int;
+
+ALTER TABLE Student
+Modify name varchar(20)
+NOT NULL;
+
+ALTER TABLE Classroom
+ALTER capacity SET DEFAULT 50;
+
+ALTER TABLE Instructor
+ADD CONSTRAINT ck_instr
+ CHECK(salary>50000);
+
+ALTER TABLE Student
+ADD DOB Date;
+ 
+ALTER TABLE Course
+modify course_id varchar(7);   -      Not found
+
+
+ALTER TABLE Department
+DROP COLUMN dept_no;
+
+ALTER TABLE Student
+MODIFY name varchar(20);
+
+ALTER TABLE Classroom
+ALTER capacity SET DEFAULT NULL;
+
+ALTER TABLE Instructor
+DROP CHECK ck_instr; 
+
+
+RENAME TABLE Takes to Subject;
+
+INSERT INTO Classroom
+VALUES('Packard',101,500);
+INSERT INTO Classroom
+VALUES('Painter',514,10);
+INSERT INTO Classroom
+VALUES('Taylor',3128,70);
+INSERT INTO Classroom
+VALUES('Watson',100,30);
+INSERT INTO Classroom
+VALUES('Watson',120,50);
+
+
+
+
+INSERT INTO Department
+VALUES('Biology','Watson',90000);
+INSERT INTO Department
+VALUES('Comp.Sci','Taylor',100000);
+INSERT INTO Department
+VALUES('Elec.Eng','Taylor',85000);
+INSERT INTO Department
+VALUES('Finance','Painter',120000);
+INSERT INTO Department
+VALUES('History','Painter',50000);
+INSERT INTO Department
+VALUES('Music','Packard',80000);
+INSERT INTO Department
+VALUES('Physics','Watson',70000);
+
+
+
+
+INSERT INTO Instructor
+VALUES(10101,'Srinivasan','Comp.Sci',65000);
+INSERT INTO Instructor
+VALUES(12121,'Wu','Finance',90000);
+INSERT INTO Instructor
+VALUES(15151,'Mozart','Music',40000);
+INSERT INTO Instructor
+VALUES(22222,'Einstein','Physics',95000);
+INSERT INTO Instructor
+VALUES(32343,'El Said','History',60000);
+INSERT INTO Instructor
+VALUES(33456,'Gold','Physics',87000);
+INSERT INTO Instructor
+VALUES(45565,'Katz','Comp.Sci',75000);
+INSERT INTO Instructor
+VALUES(58583,'Califeri','History',62000);
+INSERT INTO Instructor
+VALUES(76543,'Singh','Finance',80000);
+INSERT INTO Instructor
+VALUES(76766,'Crick','Biology',72000);
+INSERT INTO Instructor
+VALUES(83821,'Brandt','Comp.Sci',92000);
+INSERT INTO Instructor
+VALUES(98345,'Kim','Elec.Eng',80000);
+
+
+INSERT INTO Course
+VALUES('BIO-101','Intro.to Biology','Biology',4);
+INSERT INTO Course
+VALUES('BIO-301','Genetics','Biology',4);
+INSERT INTO Course
+VALUES('BIO-399','Computational Biology','Biology',3);
+INSERT INTO Course
+VALUES('CS-101','Intro.to.Computer Science','Comp.Sci',4);
+INSERT INTO Course
+VALUES('CS-190','Game Design','Comp.Sci',4);
+INSERT INTO Course
+VALUES('CS-315','Robotics','Comp.Sci',3);
+INSERT INTO Course
+VALUES('CS-319','Image Processing','Comp.Sci',3);
+INSERT INTO Course
+VALUES('CS-347','Database System Concepts','Comp.Sci',3);
+INSERT INTO Course
+VALUES('EE-181','Intro.to Digital Systems','Elec.Eng',3);
+INSERT INTO Course
+VALUES('FIN-201','Investment Banking','Finance',3);
+INSERT INTO Course
+VALUES('HIS-351','World History','History',3);
+INSERT INTO Course
+VALUES('MU-199','Music Video Production','Music',3);
+INSERT INTO Course
+VALUES('PHY-101','Physical Principles','Physics',4);
+
+
+
+INSERT INTO Student
+VALUES(00128,'Zhang','Comp.Sci',102,'2008-7-04');
+INSERT INTO Student
+VALUES(12345,'Shankar','Comp.Sci',32,'2001-7-04');
+INSERT INTO Student
+VALUES(19991,'Brandt','History',80,'2002-7-04');
+INSERT INTO Student
+VALUES(23121,'Chavez','Finance',110,'2000-8-04');
+INSERT INTO Student
+VALUES(44553,'Peltier','Physics',56,'2005-7-04');
+INSERT INTO Student
+VALUES(45678,'Levy','Physics',46,'2003-7-04');
+INSERT INTO Student
+VALUES(54321,'Williams','Comp.Sci',54,'2006-7-04');
+INSERT INTO Student
+VALUES(55739,'Sanchez','Music',38,'2008-7-04');
+INSERT INTO Student
+VALUES(70557,'Snow','Physics',0,'2003-7-04');
+INSERT INTO Student
+VALUES(76543,'Brown','Comp.Sci',58,'2005-7-04');
+INSERT INTO Student
+VALUES(766543,'Aoi','Elec.Eng',60,'2003-7-04');
+INSERT INTO Student
+VALUES(98765,'Bourikas','Elec.Eng',98,'2008-7-02');
+INSERT INTO Student
+VALUES(98988,'Tanaka','Biology',120,'2003-7-04');
+
+INSERT INTO Section
+VALUES('BIO-101',1,'Summer',2009,'Painter',514);
+INSERT INTO Section
+VALUES('BIO-301',2,'Summer',2010,'Painter',514);
+INSERT INTO Section
+VALUES('CS-101',3,'Fall',2009,'Packard',101);
+INSERT INTO Section
+VALUES('CS-101',4,'Spring',2010,'Packard',101);
+INSERT INTO Section
+VALUES('CS-190',5,'Spring',2009,'Taylor',3128);
+INSERT INTO Section
+VALUES('CS-190',6,'Spring',2009,'Taylor',3128);
+INSERT INTO Section
+VALUES('CS-315',7,'Spring',2010,'Watson',120);
+INSERT INTO Section
+VALUES('CS-319',8,'Spring',2010,'Watson',100);
+INSERT INTO Section
+VALUES('CS-319',9,'Spring',2010,'Taylor',3128);
+INSERT INTO Section
+VALUES('CS-347',10,'Fall',2009,'Taylor',3128);
+INSERT INTO Section
+VALUES('EE-181',11,'Spring',2009,'Taylor',3128);
+INSERT INTO Section
+VALUES('FIN-201',12,'Spring',2010,'Packard',101);
+INSERT INTO Section
+VALUES('HIS-351',13,'Spring',2010,'Painter',514);
+INSERT INTO Section
+VALUES('MU-199',14,'Spring',2010,'Packard',101);
+INSERT INTO Section
+VALUES('PHY-101',15,'Fall',2009,'Watson',100);
+
+INSERT INTO Teaches
+VALUES(10121,'CS-101',1,'Fall',2009);
+INSERT INTO Teaches
+VALUES(10131,'CS-315',1,'Spring',2010);
+INSERT INTO Teaches
+VALUES(10141,'CS-347',1,'Fall',2009);
+INSERT INTO Teaches
+VALUES(12121,'FIN-201',1,'Spring',2010);
+INSERT INTO Teaches
+VALUES(15151,'MU-199',1,'Spring',2010);
+INSERT INTO Teaches
+VALUES(22222,'PHY-101',1,'Fall',2009);
+INSERT INTO Teaches
+VALUES(32343,'HIS-351',1,'Spring',2010);
+INSERT INTO Teaches
+VALUES(45565,'CS-101',1,'Spring',2010);
+INSERT INTO Teaches
+VALUES(45569,'CS-319',1,'Spring',2010);
+INSERT INTO Teaches
+VALUES(76766,'BIO-101',1,'Summer',2009);
+INSERT INTO Teaches
+VALUES(76768,'BIO-301',1,'Summer',2010);
+INSERT INTO Teaches
+VALUES(83821,'CS-190',1,'Spring',2009);
+INSERT INTO Teaches
+VALUES(83823,'CS-190',2,'Spring',2009);
+INSERT INTO Teaches
+VALUES(83828,'CS-319',2,'Spring',2010);
+INSERT INTO Teaches
+VALUES(98345,'EE-181',1,'Spring',2009);
+
+
+
+UPDATE STUDENT 
+SET name='Mozart'
+WHERE ID=45678;
+
+UPDATE Department
+SET building='Taylor',budget=100000
+WHERE dept_name="History";
+
+UPDATE Instructor
+SET salary=1.1*salary;
+
+UPDATE Course 
+SET credits=4
+WHERE dept_name="Comp.Sci";
+
+UPDATE Student 
+SET tot_cred=10+tot_cred
+WHERE tot_cred BETWEEN 20 AND 50;
+
+
+
+UPDATE Instructor
+set salary = salary * 1.05 
+where salary < (select salary from (select avg(salary) salary from Instructor)t);
+
+UPDATE Teaches 
+SET year=2010
+WHERE course_id='CS-101' AND semester='FALL';
+
+
+
+DELETE FROM Student
+WHERE tot_cred=0;
+
+DELETE FROM Instructor
+WHERE ID LIKE '765%';
+
+DELETE FROM Course
+WHERE course_id NOT IN
+(SELECT course_id FROM Section);
+
+
+
+

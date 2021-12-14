@@ -1,0 +1,28 @@
+SELECT name,dept_name FROM Instructor;
+SELECT DISTINCT semester FROM Teaches;
+SELECT name,salary*1.1 FROM Instructor;
+
+SELECT ID,name FROM Instructor
+WHERE salary>70000 AND dept_name='Comp.Sci';
+
+SELECT i.name ,i.dept_name,d.building
+FROM Instructor i
+INNER JOIN Department d
+ON i.dept_name=d.dept_name;
+
+SELECT i.name ,c.course_id
+FROM Instructor i
+JOIN Teaches c
+ON i.ID=c.ID
+WHERE dept_name='Comp.Sci';
+
+SELECT * FROM Course WHERE title LIKE 'Intro%';
+
+SELECT * FROM Course WHERE title LIKE '%Comp';
+
+SELECT * FROM Student
+WHERE name LIKE '---';
+
+SELECT * FROM Instructor
+WHERE name LIKE '---%';
+
