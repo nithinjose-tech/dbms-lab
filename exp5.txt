@@ -31,3 +31,9 @@ ROLLBACK TO SAVEPOINT nithin_dept;
 ROLLBACK TO SAVEPOINT nitin_cred;
 
 ROLLBACK TO SAVEPOINT nitin_name;
+
+
+start transaction;
+savepoint initial;
+update Subject set year=2011 where ID=137;
+rollback to initial;
