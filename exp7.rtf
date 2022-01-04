@@ -1,0 +1,26 @@
+1)
+   CREATE VIEW Yearwise AS
+      SELECT * FROM section
+      WHERE year = 2009;
+
+2)
+   CREATE VIEW Studentlist AS
+       SELECT * FROM Student
+       ORDER BY name;
+
+3)
+  CREATE VIEW Teacher AS
+       SELECT * FROM Teaches
+       WHERE ID NOT IN(SELECT ID FROM Instructor);
+4)
+  INSERT INTO Studentlist
+    VALUES(40034,'Aaron','Biology',132,'2008-4-04');
+
+  UPDATE Studentlist SET name="Saviour" WHERE ID='40034';
+ 5)
+  DELETE FROM STUDENT WHERE ID='40034';
+
+6)
+   DROP VIEW Studentlist;
+   DROP VIEW Teacher;
+   DROP VIEW Yearwise;
